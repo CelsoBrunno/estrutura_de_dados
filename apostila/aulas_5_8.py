@@ -225,6 +225,7 @@ def _aula5(doc):
         "Sair das estruturas lineares: inserir numa BST pela regra esquerda/direita e "
         "percorrer em ordem, pré-ordem e pós-ordem.",
     )
+    e.aviso_ferramenta(doc, "VS Code")
     e.corpo(
         doc,
         "Hash acha pela chave, mas não entrega os dados ordenados. Árvore organiza "
@@ -269,8 +270,7 @@ def _aula5(doc):
         "a BST da prática é a versão com regra de busca.",
     )
 
-    e.h_antes(doc)
-    e.bullets(
+    e.checkpoint(
         doc,
         [
             "Inserir cinco valores e desenhar a árvore no papel.",
@@ -287,6 +287,7 @@ def _aula6(doc):
         "Modelar vértices e arestas, escolher lista de adjacência e achar o caminho mais "
         "curto em arestas com BFS — usando fila.",
     )
+    e.aviso_ferramenta(doc, "VS Code")
     e.corpo(
         doc,
         "Árvore é um grafo sem ciclo, com um ancestral comum. Grafo permite ciclo: "
@@ -331,8 +332,7 @@ def _aula6(doc):
         "listas) e o caminho mais curto entre dois usuários com BFS.",
     )
 
-    e.h_antes(doc)
-    e.bullets(
+    e.checkpoint(
         doc,
         [
             "Desenhar o grafo da prática no papel (círculos e linhas).",
@@ -349,6 +349,7 @@ def _aula7(doc):
         "Manter o menor (ou maior) elemento no topo com um heap em array, usar isso como "
         "fila de prioridade e receber o briefing do projeto final.",
     )
+    e.aviso_ferramenta(doc, "VS Code")
     e.corpo(
         doc,
         "Fila comum atende por ordem de chegada. Hospital, suporte e entrega urgente "
@@ -408,8 +409,7 @@ def _aula7(doc):
         "Não recomece do zero na apresentação.",
     )
 
-    e.h_antes(doc)
-    e.bullets(
+    e.checkpoint(
         doc,
         [
             "Inserir quatro números no min-heap e extrair em ordem crescente.",
@@ -426,6 +426,7 @@ def _aula8(doc):
         "Juntar as estruturas num simulador de logística, defender as escolhas em 5 a 8 "
         "minutos e entregar um README que outra pessoa consiga rodar.",
     )
+    e.aviso_ferramenta(doc, "VS Code")
     e.atencao(
         doc,
         "Esta aula não é para inventar heap na hora. É para integrar, quebrar, consertar e apresentar.",

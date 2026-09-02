@@ -5,59 +5,10 @@ import estilo as e
 
 def escrever_capa(doc):
     e.capa(doc)
-    e.caixa(
-        doc,
-        "Como esta apostila funciona",
-        "Você não pula para o simulador pronto. Em cada aula faz uma estrutura "
-        "simples, lê o que aquilo significa e só então volta e edita. O projeto "
-        "final nasce assim: array, lista, pilha, fila, hash, árvore, grafo e heap.",
-        e.FILL_DICA,
-    )
-    e.caixa(
-        doc,
-        "Uso desta apostila",
-        "© 2026 Celso Brunno Rocha Custódio de Campos. Material de uso didático. "
-        "É vedada a reprodução, distribuição ou comercialização sem autorização do autor. "
-        "O aluno pode usar o conteúdo para estudar e montar o projeto do curso.",
-        e.FILL_ATENCAO,
-    )
-
-
-def escrever_sumario(doc):
-    e.quebra(doc)
-    p = doc.add_paragraph()
-    e.run_txt(p, "Sumário", "Trebuchet MS", 22, True, e.NAVY)
-    p2 = doc.add_paragraph()
-    e.run_txt(p2, "Clique no título para ir à seção.", "Calibri", 12, False, e.CINZA)
-
-    entradas = [
-        (None, "Antes de começar", e.slug("Antes de começar"), 0),
-        (None, "O que você vai construir", e.slug("O que você vai construir"), 1),
-        (None, "Ferramentas", e.slug("Ferramentas"), 1),
-        (None, "Calendário (igual ao site)", e.slug("Calendário (igual ao site)"), 1),
-        ("INSTALAÇÃO", "fazer em casa (não entra na aula)", e.slug("fazer em casa (não entra na aula)"), 0),
-        (None, "Python 3", e.slug("Python 3"), 1),
-        (None, "VS Code", e.slug("VS Code"), 1),
-        (None, "Conferir se está pronto", e.slug("Conferir se está pronto"), 1),
-        (None, "Se deu erro, faça isto", e.slug("Se deu erro, faça isto"), 0),
-        (None, "Boas práticas de programação", e.slug("Boas práticas de programação"), 0),
-        ("AULA 1", "Fundamentos de Memória, Big-O e Arrays", e.slug("AULA 1"), 0),
-        ("AULA 2", "Listas Encadeadas (Linked Lists)", e.slug("AULA 2"), 0),
-        ("AULA 3", "Pilhas (Stacks) e Filas (Queues)", e.slug("AULA 3"), 0),
-        ("AULA 4", "Tabelas Hash (Dicionários/Mapas)", e.slug("AULA 4"), 0),
-        ("AULA 5", "Árvores Binárias e Árvores de Busca (BST)", e.slug("AULA 5"), 0),
-        ("AULA 6", "Grafos e Algoritmos de Travessia", e.slug("AULA 6"), 0),
-        ("AULA 7", "Heaps e preparação para o projeto", e.slug("AULA 7"), 0),
-        ("AULA 8", "Projeto Final (PBL Integrado)", e.slug("AULA 8"), 0),
-        ("APÊNDICE", "Código de referência", e.slug("Código de referência"), 0),
-    ]
-    for rotulo, titulo, ancora, nivel in entradas:
-        e.linha_sumario(doc, rotulo, titulo, ancora, nivel)
 
 
 def escrever_preambulo(doc):
-    e.quebra(doc)
-    e.h_titulo(doc, "Antes de começar", e.slug("Antes de começar"))
+    e.h1(doc, "Antes de começar")
     e.corpo(
         doc,
         "Esta apostila acompanha o curso Estruturas de Dados. Cada aula tem 2h30. "
@@ -126,40 +77,48 @@ def escrever_preambulo(doc):
     )
 
     e.quebra(doc)
-    e.h_rotulo(doc, "INSTALAÇÃO")
-    e.h_titulo(doc, "fazer em casa (não entra na aula)", e.slug("fazer em casa (não entra na aula)"))
+    e.h1(doc, e.TITULO_INSTALACAO)
     e.atencao(
         doc,
-        "Este capítulo não é aula. Nas 8 aulas o professor considera Python e VS Code "
+        "Este capítulo *não* é aula. Nas 8 aulas o professor considera Python e VS Code "
         "já instalados. Use estas páginas em casa, antes do curso ou se o computador for novo.",
     )
 
     e.h_secao(doc, "Python 3")
-    e.corpo(doc, "Passo 1. Abra python.org e baixe o instalador do Python 3.")
-    e.corpo(doc, "Passo 2. No Windows, marque Add python.exe to PATH antes de clicar em Install Now.")
-    e.corpo(doc, "Passo 3. Termine a instalação. Depois abra o Prompt e digite `python --version`. Deve aparecer 3.x.")
+    e.passo(doc, 1, "Abra python.org e baixe o instalador do Python 3.")
+    e.passo(doc, 2, "No Windows, marque *Add python.exe to PATH* antes de clicar em Install Now.")
+    e.passo(
+        doc,
+        3,
+        "Termine a instalação. Depois abra o Prompt e digite `python --version`. Deve aparecer 3.x.",
+    )
 
     e.h_secao(doc, "VS Code")
-    e.corpo(doc, "Passo 1. Baixe em code.visualstudio.com e instale.")
-    e.corpo(doc, "Passo 2. Abra o VS Code → ícone de extensões → instale a extensão Python (Microsoft).")
-    e.corpo(
+    e.passo(doc, 1, "Baixe em code.visualstudio.com e instale.")
+    e.passo(doc, 2, "Abra o VS Code → ícone de extensões → instale a extensão *Python* (Microsoft).")
+    e.passo(
         doc,
-        "Passo 3. File → Open Folder na pasta do projeto (a pasta que contém `exemplos/`). "
+        3,
+        "File → Open Folder na pasta do projeto (a pasta que contém `exemplos/`). "
         "Abra um `.py` e rode no terminal: `python exemplos/01_array.py`.",
     )
     e.dica(
         doc,
-        "O terminal precisa estar na pasta do projeto. Se aparecer `FileNotFoundError`, "
+        "O terminal precisa estar *na pasta do projeto*. Se aparecer `FileNotFoundError`, "
         "você rodou de outra pasta. No VS Code: Terminal → New Terminal (ele abre na pasta que você abriu).",
     )
 
     e.h_secao(doc, "Conferir se está pronto")
-    e.corpo(doc, "Passo 1. `python --version` — precisa ser 3.x")
-    e.corpo(doc, "Passo 2. `python exemplos/01_array.py` — precisa mostrar o estado da memória e, no fim, um erro de capacidade.")
+    e.passo(doc, 1, "`python --version` — precisa ser 3.x")
+    e.passo(
+        doc,
+        2,
+        "`python exemplos/01_array.py` — precisa mostrar o estado da memória e, no fim, um erro de capacidade.",
+    )
 
     e.quebra(doc)
-    e.h_titulo(doc, "Se deu erro, faça isto", e.slug("Se deu erro, faça isto"))
-    e.corpo(doc, "Leia a última linha da mensagem em vermelho. Ache o sintoma abaixo e faça o X.")
+    e.h1(doc, e.TITULO_ERROS)
+    e.corpo(doc, "Leia a *última* linha da mensagem em vermelho. Ache o sintoma abaixo e faça o X.")
 
     e.h_secao(doc, "Python não encontrado")
     e.corpo(
@@ -170,12 +129,16 @@ def escrever_preambulo(doc):
     e.bullets(
         doc,
         [
-            "O Python não está instalado, ou foi instalado sem marcar Add python.exe to PATH.",
-            "Feche o VS Code, instale de novo pelo capítulo de Instalação e reabra o programa.",
-            "No VS Code: Ctrl+Shift+P → Python: Select Interpreter → escolha o Python 3.",
+            "O Python não está instalado, ou foi instalado *sem* marcar Add python.exe to PATH.",
+            "Feche o VS Code, instale de novo pelo capítulo de Instalação e *reabra* o programa.",
+            "No VS Code: Ctrl+Shift+P → *Python: Select Interpreter* → escolha o Python 3.",
             "Teste fora do editor: abra o Prompt e digite `python --version`.",
         ],
     )
+    par = doc.add_paragraph()
+    r = par.add_run("Passo a passo da instalação: ")
+    e._rpr(r, e.BODY, 11, False, e.TEXTO)
+    e.frase_com_pagina(par, e.TITULO_INSTALACAO, "Instalação")
 
     e.h_secao(doc, "IndentationError")
     e.corpo(
@@ -220,7 +183,7 @@ def escrever_preambulo(doc):
     )
 
     e.quebra(doc)
-    e.h_titulo(doc, "Boas práticas de programação", e.slug("Boas práticas de programação"))
+    e.h1(doc, "Boas práticas de programação")
     e.corpo(
         doc,
         "Código não é só para o computador. Daqui a uma semana você vai reler o que escreveu hoje. "

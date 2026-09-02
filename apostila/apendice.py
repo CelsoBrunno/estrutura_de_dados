@@ -3,8 +3,7 @@ import estilo as e
 
 def escrever_apendice(doc):
     e.quebra(doc)
-    e.h_rotulo(doc, "APÊNDICE")
-    e.h_titulo(doc, "Código de referência", e.slug("Código de referência"))
+    e.h1(doc, "Apêndice — Código de referência")
     e.corpo(
         doc,
         "Os arquivos abaixo estão na pasta `exemplos/`. Rode sempre com o terminal na pasta "

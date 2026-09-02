@@ -283,13 +283,7 @@ def _aula1(doc):
         "Entender alocação contígua na RAM, ler Big-O no pior caso e simular um array "
         "estático em Python — inclusive o erro de capacidade cheia.",
     )
-    e.caixa(
-        doc,
-        "Para seguir, use o VS Code",
-        "A instalação não entra no tempo de aula. Se ainda não tiver o programa, faça o "
-        "passo a passo em Instalação. Se a tela falhar, vá para Se deu erro, faça isto.",
-        e.FILL_DICA,
-    )
+    e.aviso_ferramenta(doc, "VS Code")
 
     e.h_secao(doc, "Como a RAM guarda um array")
     e.corpo(
@@ -389,8 +383,7 @@ def _aula1(doc):
         "é o gancho da Aula 2.",
     )
 
-    e.h_antes(doc)
-    e.bullets(
+    e.checkpoint(
         doc,
         [
             "Explicar por que o acesso por índice é `O(1)` e a inserção no meio é `O(n)`.",
@@ -407,6 +400,7 @@ def _aula2(doc):
         "Quebrar a contiguidade da RAM: montar nós com ponteiros, inserir no início em `O(1)` "
         "e navegar para frente e para trás numa lista dupla.",
     )
+    e.aviso_ferramenta(doc, "VS Code")
     e.corpo(
         doc,
         "Retome a pergunta da Aula 1: como aumentar a mochila sem um bloco contínuo novo?",
@@ -472,8 +466,7 @@ def _aula2(doc):
         "Sem isso, o NoneType aparece na hora da demo.",
     )
 
-    e.h_antes(doc)
-    e.bullets(
+    e.checkpoint(
         doc,
         [
             "Desenhar três nós no papel e o ponteiro `cabeca`.",
@@ -490,6 +483,7 @@ def _aula3(doc):
         "Restringir o acesso: LIFO na pilha e FIFO na fila. Na live coding as duas nascem "
         "sobre nós; na prática (Call Center) usamos `deque` e `list`, ambos em `O(1)`.",
     )
+    e.aviso_ferramenta(doc, "VS Code")
     e.corpo(
         doc,
         "Nas Aulas 1 e 2 o tema era “onde a memória mora”. Agora o tema é a regra de negócio: "
@@ -551,8 +545,7 @@ def _aula3(doc):
         "para o fim da fila atrás do Carlos: ela retoma a prioridade de quem já estava sendo atendido.",
     )
 
-    e.h_antes(doc)
-    e.bullets(
+    e.checkpoint(
         doc,
         [
             "Dizer em uma frase a diferença LIFO / FIFO apontando a fila e a pilha do Call Center.",
@@ -569,6 +562,7 @@ def _aula4(doc):
         "Mapear chave → índice com uma função de hash, tratar colisão por encadeamento "
         "e buscar em tempo médio `O(1)` sem usar o `dict` nativo.",
     )
+    e.aviso_ferramenta(doc, "VS Code")
     e.corpo(
         doc,
         "Gancho da Aula 3: o gerente quer o cliente “Carlos” sem percorrer a fila inteira. "
@@ -609,8 +603,7 @@ def _aula4(doc):
         "colidam no mesmo índice (mesmo `sum(ord) % tamanho`) e mostre os dois pares no balde.",
     )
 
-    e.h_antes(doc)
-    e.bullets(
+    e.checkpoint(
         doc,
         [
             "Calcular na mão o índice de uma chave pequena.",

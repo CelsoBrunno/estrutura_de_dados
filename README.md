@@ -10,10 +10,10 @@ Professor: Celso Brunno Rocha Custódio de Campos.
 - `apostila/imagens/` — diagramas (bits, memória, nós, pilha, hash, BST, grafo, heap)
 - `exemplos/` — scripts na ordem das aulas
 
-Para regenerar a apostila (atualiza também os números do sumário, se o Word estiver instalado):
+Para regenerar a apostila (atualiza o sumário interativo e, se o Word estiver instalado, os números de página e o PDF):
 
 ```
-python -m pip install python-docx
+python -m pip install python-docx Pillow
 cd apostila
 python gerar_apostila.py
 ```
