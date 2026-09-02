@@ -318,12 +318,30 @@ def pratica(doc, titulo, texto):
     caixa(doc, titulo, texto, FILL_PRATICA)
 
 
+def glossario_anchor(nome: str) -> str:
+    """Âncora estável para entrada do glossário: ord() → glossario_ord."""
+    base = nome.strip().replace("()", "").replace("%", "resto")
+    return "glossario_" + toc_anchor(base)
+
+
 def _texto_misto(p, texto: str, tamanho=12) -> None:
-    partes = re.split(r"(`[^`]+`|\*[^*]+\*)", texto)
+    # `codigo` | *itálico* | [[ord()]] = link para o glossário
+    partes = re.split(r"(`[^`]+`|\*[^*]+\*|\[\[[^\]]+\]\])", texto)
     for parte in partes:
         if not parte:
             continue
-        if parte.startswith("`") and parte.endswith("`") and len(parte) >= 2:
+        if parte.startswith("[[") and parte.endswith("]]") and len(parte) >= 4:
+            nome = parte[2:-2].strip()
+            _toc_link(
+                p,
+                glossario_anchor(nome),
+                nome,
+                size=tamanho - 1,
+                color=TEAL,
+                font=MONO,
+                underline=True,
+            )
+        elif parte.startswith("`") and parte.endswith("`") and len(parte) >= 2:
             run_txt(p, parte[1:-1], MONO, tamanho - 1, False, TEAL)
         elif parte.startswith("*") and parte.endswith("*") and len(parte) >= 2:
             run_txt(p, parte[1:-1], BODY, tamanho, False, TEXTO, True)
@@ -391,11 +409,47 @@ def h2(doc: Document, texto: str):
     return par
 
 
-def h3(doc: Document, texto: str):
+def h3(doc: Document, texto: str, bookmark_nome: str | None = None):
     par = doc.add_paragraph()
     _tight(par, after=6, before=12)
     run_txt(par, texto, HEAD, 12, True, NAVY)
+    if bookmark_nome:
+        bookmark(par, bookmark_nome)
     return par
+
+
+def entrada_glossario(
+    doc: Document,
+    nome: str,
+    texto: str,
+    exemplo: str | None = None,
+) -> None:
+    """Título clicável no glossário (âncora glossario_*)."""
+    h3(doc, nome, bookmark_nome=glossario_anchor(nome))
+    corpo(doc, texto)
+    if exemplo:
+        codigo(doc, exemplo)
+
+
+def indice_glossario(doc: Document, nomes: list[str]) -> None:
+    """Lista de links para as entradas do glossário."""
+    for nome in nomes:
+        par = doc.add_paragraph()
+        _tight(par, after=4)
+        par.paragraph_format.left_indent = Cm(0.7)
+        par.paragraph_format.first_line_indent = Cm(-0.35)
+        run_txt(par, "▸  ", BODY, 10, True, LARANJA)
+        _toc_link(
+            par,
+            glossario_anchor(nome),
+            nome,
+            size=11,
+            color=TEAL,
+            font=MONO,
+            underline=True,
+        )
+        par.add_run("\t")
+        _pageref(par, glossario_anchor(nome))
 
 
 def h_rotulo(doc: Document, texto: str, bookmark_nome: str | None = None) -> None:
@@ -539,7 +593,7 @@ def _toc_tab(paragraph, pos="9600"):
     p_pr.append(tabs)
 
 
-def _toc_link(paragraph, anchor, text, *, size, color, bold=False, font=BODY):
+def _toc_link(paragraph, anchor, text, *, size, color, bold=False, font=BODY, underline=False):
     hyperlink = OxmlElement("w:hyperlink")
     hyperlink.set(qn("w:anchor"), anchor)
     hyperlink.set(qn("w:history"), "1")
@@ -558,7 +612,7 @@ def _toc_link(paragraph, anchor, text, *, size, color, bold=False, font=BODY):
     if bold:
         r_pr.append(OxmlElement("w:b"))
     u = OxmlElement("w:u")
-    u.set(qn("w:val"), "none")
+    u.set(qn("w:val"), "single" if underline else "none")
     r_pr.append(u)
     run.append(r_pr)
     t = OxmlElement("w:t")

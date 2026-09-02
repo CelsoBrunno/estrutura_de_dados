@@ -319,9 +319,9 @@ def _aula6(doc):
     e.codigo(doc, GRAFO, "exemplos/06_grafo.py")
     e.dica(
         doc,
-        "Aqui o exemplo usa `deque.popleft` para a BFS ficar `O(1)` na ponta da fila. "
+        "Aqui o exemplo usa [[deque]] + [[popleft()]] para a BFS ficar `O(1)` na ponta da fila. "
         "É a mesma regra FIFO que vocês implementaram com nós. No projeto, pode colar a "
-        "classe `Fila` da Aula 3 no lugar do deque.",
+        "classe `Fila` da Aula 3 no lugar do deque. Vértices novos usam [[setdefault()]].",
     )
 
     e.h_secao(doc, "Práticas da aula")

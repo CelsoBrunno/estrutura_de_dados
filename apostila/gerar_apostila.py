@@ -14,6 +14,7 @@ import aulas_1_4  # noqa: E402
 import aulas_5_8  # noqa: E402
 import estilo as e  # noqa: E402
 import figuras  # noqa: E402
+import glossario  # noqa: E402
 import preambulo  # noqa: E402
 
 SAIDA = HERE / "Apostila-Estruturas-de-Dados.docx"
@@ -74,7 +75,16 @@ SUMARIO = [
     ),
     (
         "Aula 4 — Tabelas Hash (Dicionários/Mapas)",
-        ["Função de hash e colisão", "Live coding: tabela com chaining"],
+        [
+            "O problema (antes da técnica)",
+            "Resposta em uma frase",
+            "O dict do Python já é isso",
+            "Peças da tabela hash",
+            "Inserir e buscar (fluxo mental)",
+            "Colisão — o ponto que mais confunde",
+            "Exercício na mão (antes do código)",
+            "Live coding: tabela com chaining",
+        ],
     ),
     (
         "Aula 5 — Árvores Binárias e Árvores de Busca (BST)",
@@ -97,7 +107,14 @@ SUMARIO = [
             "Checklist antes de apresentar",
         ],
     ),
-    ("Apêndice — Código de referência", []),
+    (
+        "Apêndice — Código de referência",
+        ["Gabarito — Aula 4 (hash)"],
+    ),
+    (
+        "Apêndice — Glossário de funções",
+        ["Índice rápido"],
+    ),
 ]
 
 
@@ -156,6 +173,7 @@ def main() -> None:
     aulas_1_4.escrever_aulas_1_4(doc)
     aulas_5_8.escrever_aulas_5_8(doc)
     apendice.escrever_apendice(doc)
+    glossario.escrever_glossario(doc)
     gerado = e.salvar(doc, SAIDA)
     print(f"Word: {gerado}")
     try:

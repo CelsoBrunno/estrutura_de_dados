@@ -58,7 +58,9 @@ def escrever_preambulo(doc):
         doc,
         "Não é um curso de algoritmo do zero. Antes da Aula 1 você precisa conseguir: "
         "criar um arquivo `.py`, usar `print`, `if` e `for`, e escrever uma classe simples. "
-        "Lista e dicionário nativos aparecem só como contraste com a estrutura real.",
+        "Lista e dicionário nativos aparecem só como contraste com a estrutura real. "
+        "Funções pontuais (`ord`, `deque`, etc.) estão no *Apêndice — Glossário de funções* "
+        "(nomes em teal sublinhado no texto são links).",
     )
 
     e.h_secao(doc, "Calendário (igual ao site)")

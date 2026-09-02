@@ -237,6 +237,25 @@ sistema.mostrar_painel()
 sistema.atender_proximo()
 '''
 
+DICT_NATIVO = '''pessoa = {"nome": "Bruna", "idade": "20"}
+print(pessoa["nome"])  # rápido — o dict já é hash
+'''
+
+HASH_FUNCAO = '''def _hash(self, chave):
+    # didático: soma dos códigos dos caracteres
+    return sum(ord(c) for c in str(chave)) % self.tamanho
+'''
+
+ESQUEMA_BALDES = '''tamanho = 5
+
+baldes:
+  [0] []
+  [1] []
+  [2] [ ["u001", "João"], ["outra", "..."] ]   ← colisão
+  [3] [ ["u002", "Maria"] ]
+  [4] []
+'''
+
 HASH = '''class TabelaHash:
     def __init__(self, tamanho=8):
         self.tamanho = tamanho
@@ -517,7 +536,7 @@ def _aula3(doc):
         doc,
         "Usar `lista.pop(0)` numa `list` do Python para simular fila é `O(n)`: todos os "
         "itens andam para a esquerda (Aula 1). Por isso a fila da live coding tem ponteiro "
-        "de início e de fim na lista encadeada. Na prática do Call Center, `collections.deque` "
+        "de início e de fim na lista encadeada. Na prática do Call Center, [[deque]] "
         "resolve as duas pontas em `O(1)`; a `list` do histórico só empilha e desempilha no fim — também `O(1)`.",
     )
 
@@ -541,7 +560,7 @@ def _aula3(doc):
     e.codigo(doc, CALLCENTER, "exemplos/03_callcenter.py")
     e.dica(
         doc,
-        "Por que `appendleft` no desfazer, e não `append`? Se foi erro, a Maria não volta "
+        "Por que [[appendleft()]] no desfazer, e não `append`? Se foi erro, a Maria não volta "
         "para o fim da fila atrás do Carlos: ela retoma a prioridade de quem já estava sendo atendido.",
     )
 
@@ -549,7 +568,7 @@ def _aula3(doc):
         doc,
         [
             "Dizer em uma frase a diferença LIFO / FIFO apontando a fila e a pilha do Call Center.",
-            "Explicar por que `popleft` no `deque` é O(1) e `list.pop(0)` não é.",
+            "Explicar por que [[popleft()]] no [[deque]] é O(1) e `list.pop(0)` não é.",
             "Desfazer o encerramento da Maria e mostrar o painel com ela de volta na frente.",
         ],
     )
@@ -559,8 +578,8 @@ def _aula4(doc):
     e.h_aula(doc, 4, "Tabelas Hash (Dicionários/Mapas)")
     e.objetivo(
         doc,
-        "Mapear chave → índice com uma função de hash, tratar colisão por encadeamento "
-        "e buscar em tempo médio `O(1)` sem usar o `dict` nativo.",
+        "Entender o porquê do hash, mapear chave → índice, tratar colisão por encadeamento "
+        "e buscar em tempo médio `O(1)` — sem usar o `dict` nativo no catálogo da aula.",
     )
     e.aviso_ferramenta(doc, "VS Code")
     e.corpo(
@@ -569,22 +588,175 @@ def _aula4(doc):
         "Array é `O(1)` por índice, mas o índice não é o CPF. Hash transforma a chave em índice.",
     )
 
-    e.h_secao(doc, "Função de hash e colisão")
+    e.h_secao(doc, "O problema (antes da técnica)")
     e.corpo(
         doc,
-        "Uma função de hash devolve um inteiro. O índice na tabela é `hash(chave) % tamanho`. "
-        "Duas chaves podem cair no mesmo balde: isso é colisão. Tratamos com uma listinha "
-        "(chaining) dentro de cada posição — a lista da Aula 2 em miniatura.",
+        "Com array, achar `dados[3]` é instantâneo (`O(1)`): você já sabe o endereço. "
+        "Na vida real a pergunta costuma ser outra: “qual o nome do usuário `u001`?” ou "
+        "“qual o preço do produto `SKU-9981`?”. Aqui a chave *não* é o índice. Se você só "
+        "tiver uma lista, precisa percorrer até achar → `O(n)`.",
     )
+    e.corpo(
+        doc,
+        "*Pergunta da aula:* como transformar uma chave qualquer (texto, id, CPF) em um índice rápido?",
+    )
+
+    e.h_secao(doc, "Resposta em uma frase")
+    e.corpo(
+        doc,
+        "*Hash* = função que transforma a chave em um número; esse número vira o índice de "
+        "um “balde” na tabela. Depois disso, você só procura *dentro daquele balde*, não na "
+        "tabela inteira.",
+    )
+    e.corpo(
+        doc,
+        "Analogia do prédio: imagine 5 andares (baldes 0 a 4). Chega a moradora com a chave "
+        "`\"u001\"`. O porteiro (função de hash) calcula: “ela mora no andar 2”. Você sobe "
+        "*só* o andar 2 e procura o nome na listinha daquele andar. Se duas pessoas caírem "
+        "no mesmo andar, as duas ficam na listinha — isso é *colisão*. Ainda assim você não "
+        "vasculha o prédio inteiro.",
+    )
+
+    e.h_secao(doc, "O dict do Python já é isso")
+    e.codigo(doc, DICT_NATIVO)
+    e.corpo(
+        doc,
+        "O `dict` nativo *é* uma tabela hash (bem otimizada). Nesta aula você *não* usa o "
+        "`dict` para guardar o catálogo: recria a ideia na mão, para entender o que o Python "
+        "faz por baixo.",
+    )
+    e.bullets(
+        doc,
+        [
+            "`dict` do Python — hash pronto, uso diário.",
+            "`TabelaHash` da aula — hash didático, para estudar o mecanismo.",
+        ],
+    )
+
+    e.h_secao(doc, "Peças da tabela hash")
+    e.bullets(
+        doc,
+        [
+            "*Tabela* — array de tamanho fixo (ex.: 5 ou 8 posições).",
+            "*Balde* — cada posição é uma listinha (vazia no início).",
+            "*Função de hash* — transforma a chave em inteiro.",
+            "*Índice* — `hash(chave) % tamanho` (fica entre `0` e `tamanho - 1`).",
+            "*Par* — dentro do balde guardamos `[chave, valor]`.",
+        ],
+    )
+    e.codigo(doc, ESQUEMA_BALDES)
+    e.corpo(
+        doc,
+        "Fórmula didática do curso: `indice = (soma dos códigos dos caracteres) % tamanho`.",
+    )
+    e.codigo(doc, HASH_FUNCAO)
     e.dica(
         doc,
-        "Tempo médio `O(1)` assume tabela folgada e hash espalhada. Se todo mundo cai no "
-        "mesmo balde, a busca vira `O(n)`. Por isso o tamanho da tabela importa.",
+        "[[ord()]] devolve o código numérico do caractere; [[sum()]] soma esses códigos; "
+        "[[%]] (resto) cabe o índice na tabela. Clique nos nomes para o glossário no final. "
+        "Essa função de hash é *só para aprender* — a do `dict` real é mais sofisticada. "
+        "O que importa agora é o fluxo: chave → número → balde → buscar/atualizar.",
     )
     e.figura(
         doc,
         "04_hash.png",
         "Cada balde é uma listinha. Duas chaves no mesmo índice = colisão; as duas ficam no encadeamento.",
+    )
+
+    e.h_secao(doc, "Inserir e buscar (fluxo mental)")
+    e.corpo(doc, "Inserir `\"u001\" → \"João\"`:")
+    e.passo(doc, 1, "Calcular `indice = _hash(\"u001\")`.")
+    e.passo(doc, 2, "Ir ao `baldes[indice]`.")
+    e.passo(
+        doc,
+        3,
+        "Se a chave *já existe* nesse balde → atualiza o valor (não duplica).",
+    )
+    e.passo(doc, 4, "Se não existe → [[append()]] `[chave, valor]` na listinha.")
+    e.corpo(doc, "Buscar `\"u001\"`:")
+    e.passo(doc, 1, "Calcular o *mesmo* índice.")
+    e.passo(doc, 2, "Percorrer *só* aquele balde.")
+    e.passo(doc, 3, "Se achar a chave → devolve o valor; senão → `None`.")
+    e.corpo(
+        doc,
+        "Por que é rápido no caso médio? Porque a maioria dos baldes tem poucos itens — "
+        "você quase não percorre a tabela toda.",
+    )
+
+    e.h_secao(doc, "Colisão — o ponto que mais confunde")
+    e.corpo(
+        doc,
+        "*Colisão* = duas chaves *diferentes* geram o *mesmo* índice. Isso *não é erro*: "
+        "é esperado. Tratamento desta aula: *encadeamento (chaining)* — cada balde é uma "
+        "listinha; as chaves colidentes ficam juntas no mesmo balde (lista da Aula 2 em miniatura).",
+    )
+    e.bullets(
+        doc,
+        [
+            "Chaves bem espalhadas, tabela folgada → busca média ≈ `O(1)`.",
+            "Quase tudo no mesmo balde → piora para `O(n)`.",
+        ],
+    )
+    e.atencao(
+        doc,
+        "Por isso o tamanho da tabela importa. Tabela pequena demais → mais colisões → "
+        "mais lento. Tempo médio `O(1)` *assume* tabela folgada e hash espalhada.",
+    )
+
+    e.h_secao(doc, "Comparação rápida (não misture com as outras aulas)")
+    e.bullets(
+        doc,
+        [
+            "Lista encadeada — inserir no início fácil; busca `O(n)`.",
+            "Array por índice — `O(1)` se souber o índice; índice ≠ CPF / id.",
+            "Hash — busca por chave ≈ `O(1)` médio; não mantém ordem; há colisões.",
+            "BST (Aula 5) — mantém ordem + busca `O(log n)`; mais complexa.",
+        ],
+    )
+    e.corpo(
+        doc,
+        "No projeto final (logística): hash guarda `id_pacote → dados`; heap decide "
+        "prioridade; grafo acha a rota. Hash acha a *ficha* do pacote — não decide quem "
+        "sai primeiro (isso é heap).",
+    )
+
+    e.h_secao(doc, "Exercício na mão (antes do código)")
+    e.corpo(
+        doc,
+        "Use tabela de tamanho `5` e a função do curso: "
+        "`indice = sum(ord(c) for c in chave) % 5` "
+        "(veja [[ord()]], [[sum()]] e [[%]] no glossário). "
+        "Códigos úteis: `u`=117, `0`=48, `1`=49, `2`=50, `a`=97, `b`=98.",
+    )
+    e.pratica(
+        doc,
+        "Parte A — Calcular índices",
+        "Calcule o índice de `\"u001\"`, `\"u002\"`, `\"ab\"` e `\"ba\"`. "
+        "Anote: chave | soma dos ord | soma % 5 | balde.",
+    )
+    e.pratica(
+        doc,
+        "Parte B — Desenhar a tabela",
+        "Insira `\"u001\" → \"João\"` e `\"u002\" → \"Maria\"`. Desenhe os 5 baldes e o "
+        "conteúdo de cada um.",
+    )
+    e.pratica(
+        doc,
+        "Parte C — Forçar colisão",
+        "Ache duas chaves diferentes no mesmo balde. Sugestão: `\"ab\"` e `\"ba\"` têm os "
+        "mesmos caracteres → mesma soma → colidem de propósito com esta função didática. "
+        "Desenhe de novo o balde com dois pares.",
+    )
+    e.pratica(
+        doc,
+        "Parte D — Busca mental",
+        "1) Para buscar `\"u001\"`, quantos baldes você abre? "
+        "2) Se o balde tiver 2 pares, o que você compara? "
+        "3) Se o tamanho da tabela for `1`, o que acontece com todas as inserções?",
+    )
+    e.dica(
+        doc,
+        "Gabarito no Apêndice — olhe *só depois* de tentar no papel.",
     )
 
     e.h_secao(doc, "Live coding: tabela com chaining")
@@ -595,19 +767,23 @@ def _aula4(doc):
         "Senão a mesma chave aparece duas vezes e a busca pega a antiga.",
     )
 
-    e.h_secao(doc, "Práticas da aula")
+    e.h_secao(doc, "Práticas no computador")
     e.pratica(
         doc,
         "Prática — Catálogo de usuários / cache",
-        "Guarde id → nome (ou url → conteúdo). Busque por chave. Invente duas chaves que "
-        "colidam no mesmo índice (mesmo `sum(ord) % tamanho`) e mostre os dois pares no balde.",
+        "Rode `python exemplos/04_hash.py`. Guarde id → nome (ou url → conteúdo). Busque "
+        "por chave. Mude o tamanho para `5`, imprima `catalogo.baldes` após cada inserção, "
+        "force uma colisão e mostre os dois pares no mesmo balde. Explique em voz alta o "
+        "que `_hash`, `inserir` e `buscar` fazem — sem olhar o código.",
     )
 
     e.checkpoint(
         doc,
         [
-            "Calcular na mão o índice de uma chave pequena.",
-            "Inserir, buscar e explicar o que o encadeamento faz na colisão.",
-            "Dizer quando hash ganha da lista e quando ainda precisa percorrer o balde.",
+            "Por que hash existe, se já temos lista?",
+            "O que significa `hash(chave) % tamanho`?",
+            "O que é colisão e como o encadeamento resolve?",
+            "Por que o tempo médio é `O(1)`, e quando isso falha?",
+            "Em uma frase: diferença entre `dict` nativo e a `TabelaHash` da aula.",
         ],
     )
