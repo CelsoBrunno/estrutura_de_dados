@@ -1,3 +1,4 @@
+import aula5_balance
 import estilo as e
 
 BST = '''class NoArvore:
@@ -222,60 +223,162 @@ def _aula5(doc):
     e.h_aula(doc, 5, "Árvores Binárias e Árvores de Busca (BST)")
     e.objetivo(
         doc,
-        "Sair das estruturas lineares: inserir numa BST pela regra esquerda/direita e "
-        "percorrer em ordem, pré-ordem e pós-ordem.",
+        "Montar uma BST pela regra esquerda/direita, ver o nó de verdade, inserir o 35, "
+        "reconhecer quando a árvore pende e equilibrar com as fórmulas AVL e os quatro "
+        "casos de rotação — sem exigir uma AVL completa no projeto.",
     )
     e.aviso_ferramenta(doc, "VS Code")
     e.corpo(
         doc,
         "Hash acha pela chave, mas não entrega os dados ordenados. Árvore organiza "
-        "hierarquia e, na BST, a busca média cai para `O(log n)` se estiver equilibrada.",
+        "hierarquia e, na BST, a busca média cai para `O(log n)` *se estiver equilibrada*.",
     )
 
     e.h_secao(doc, "Vocabulário")
     e.bullets(
         doc,
         [
-            "Raiz — o primeiro nó. Folhas — nós sem filhos. Altura — níveis até a folha mais fundo.",
-            "Árvore binária — cada nó tem no máximo dois filhos.",
-            "BST — à esquerda, valores menores; à direita, maiores.",
+            "Raiz — o primeiro nó (entrada da árvore, como a `cabeca` da lista).",
+            "Nó (`NoArvore`) — objeto com `valor`, `esquerda` e `direita`.",
+            "Folha — *estado*, não um tipo: nó cujos dois ponteiros são `None`.",
+            "Árvore binária — cada nó tem no máximo dois filhos. Ainda *não* há regra de ordem.",
+            "BST — árvore binária com regra: menores à esquerda, maiores à direita.",
+            "Altura — níveis até a folha mais fundo. Equilibrada ≈ `O(log n)`; vareta = `O(n)`.",
         ],
     )
     e.figura(
         doc,
         "05_bst.png",
-        "Inserção 50, 30, 70, 20, 40. Em-ordem lê de baixo à esquerda até a direita: 20 30 40 50 70.",
+        "Inserção 50, 30, 70, 20, 40. Em-ordem lê esquerda, o nó, direita: 20 30 40 50 70.",
     )
-    e.atencao(
+
+    e.h_secao(doc, "O nó não é uma lista")
+    e.corpo(
         doc,
-        "Se você inserir 1, 2, 3, 4, 5 nessa ordem, a BST vira uma lista à direita. "
-        "Aí a busca volta a ser `O(n)`. Equilíbrio (AVL/vermelho-preto) fica para depois; "
-        "hoje o aluno precisa ver o caso ruim.",
+        "A BST *não* é uma `list` de folhas. É o mesmo tipo de ligação da Aula 2 — objetos "
+        "com ponteiros — só que cada nó tem *dois* lados, não um `proximo`.",
+    )
+    e.figura(
+        doc,
+        "05_bst_no.png",
+        "O 50 não aponta para o menor valor da árvore. Aponta para a raiz da subárvore esquerda (30).",
+    )
+    e.bullets(
+        doc,
+        [
+            "`esquerda` e `direita` apontam para *filhos*, não para “o menor” e “o maior” da árvore toda.",
+            "O 20 é menor que o 50, mas o 50 *não* aponta para o 20: aponta para o 30; o 30 aponta para o 20.",
+            "Por isso a inserção anda nó a nó até achar um `None` e pendurar o novo ali.",
+        ],
+    )
+    e.dica(
+        doc,
+        "Frase para gravar: BST = nós ligados por dois ponteiros, com a regra menor à esquerda "
+        "e maior à direita. Folha é o nó que não tem filho.",
     )
 
     e.h_secao(doc, "Live coding: inserção e travessias")
     e.codigo(doc, BST, "exemplos/05_bst.py")
     e.dica(
         doc,
-        "Em-ordem numa BST imprime crescente. Use isso como prova de que a regra "
-        "esquerda/direita está certa.",
+        "Em-ordem numa BST imprime crescente. Se não sair crescente, a inserção está errada.",
     )
+    e.corpo(
+        doc,
+        "As três travessias não mudam a árvore. Só mudam *quando* você visita o nó "
+        "(esquerda / eu / direita):",
+    )
+    e.bullets(
+        doc,
+        [
+            "Em-ordem — esquerda, eu, direita → `20 30 40 50 70` (prova da BST).",
+            "Pré-ordem — eu, esquerda, direita → `50 30 20 40 70` (raiz primeiro).",
+            "Pós-ordem — esquerda, direita, eu → `20 40 30 70 50` (filhos antes do pai).",
+        ],
+    )
+
+    e.h_secao(doc, "O que acontece se entrar o 35")
+    e.corpo(
+        doc,
+        "O 35 *não* fura no meio da lista e o 50 *não* ganha um terceiro filho. "
+        "A inserção desce um lado por vez até um ponteiro vazio.",
+    )
+    e.bullets(
+        doc,
+        [
+            "35 < 50 → vai para a esquerda (nó 30).",
+            "35 > 30 → vai para a direita (nó 40).",
+            "35 < 40 e a esquerda do 40 é `None` → nasce o nó 35 ali.",
+        ],
+    )
+    e.figura(
+        doc,
+        "05_bst_35.png",
+        "Caminho em laranja: 50 → 30 → 40. O 35 vira folha; o 40 deixa de ser folha.",
+    )
+    e.corpo(
+        doc,
+        "Em-ordem passa a ser `20 30 35 40 50 70`. Sai crescente: a regra continuou valendo.",
+    )
+
+    e.h_secao(doc, "Quando a árvore pende")
+    e.corpo(
+        doc,
+        "Se depois do 35 entram 36 e 37 (sempre um pouco maiores, sempre o mesmo lado), "
+        "o ramo `35 → 36 → 37` vira uma lista. A BST ainda está *correta*. O formato é que ficou ruim: "
+        "para achar o 37 você visita 50, 30, 40, 35, 36, 37 — não descartou metade.",
+    )
+    e.figura(
+        doc,
+        "05_bst_pende.png",
+        "Esquerda: 35, 36, 37 no mesmo ramo. Direita: inserir 1, 2, 3, 4, 5 — o pior caso da apostila.",
+    )
+    e.atencao(
+        doc,
+        "BST correta ≠ BST rápida. `O(log n)` vale *se estiver equilibrada*. "
+        "Inserir dados já ordenados degenera para `O(n)` — o custo da lista da Aula 2.",
+    )
+
+    aula5_balance.escrever(doc)
 
     e.h_secao(doc, "Práticas da aula")
     e.pratica(
         doc,
-        "Prática — Catálogo ordenado / categorias",
+        "Prática A — Catálogo ordenado / categorias",
         "Insira códigos de produto (ou nomes de categoria comparáveis) e liste em ordem. "
         "Opcional: pense no sistema de pastas do computador como analogia de hierarquia — "
         "a BST da prática é a versão com regra de busca.",
+    )
+    e.pratica(
+        doc,
+        "Prática B — Ver a árvore pender (no papel e no código)",
+        "No caderno: desenhe 50, 30, 70, 20, 40, depois o 35, depois 36 e 37. "
+        "Rode `python exemplos/05_bst_pendente.py`. Confira a em-ordem crescente e a "
+        "rotação 10-20-30 (raiz vira 20).",
+    )
+    e.pratica(
+        doc,
+        "Prática C — Pai com filhos, reset e o 32",
+        "Rode `python exemplos/05_bst_rebalance.py`. Confira: (1) girar o 30 faz o 35 "
+        "mudar de pai; (2) reconstruir pelo meio deixa o 37 na raiz; (3) o 32 nasce à "
+        "direita do 30. Desenhe o painel 3 no caderno.",
+    )
+    e.pratica(
+        doc,
+        "Prática D — Os quatro casos, no papel e no código",
+        "Rode `python exemplos/05_bst_avl.py`. No caderno, para cada caso escreva `z`, `y`, `x` "
+        "e a fórmula `balance = h(esq) - h(dir)`. Marque se foi reta (1 ou 2) ou joelho (3 ou 4).",
     )
 
     e.checkpoint(
         doc,
         [
-            "Inserir cinco valores e desenhar a árvore no papel.",
-            "Rodar em-ordem e conferir se saiu crescente.",
-            "Explicar a diferença de objetivo entre hash (`O(1)` médio) e BST (ordem + `O(log n)`).",
+            "Desenhar o caminho do 35 até pendurar no 40.",
+            "Escrever as fórmulas de `altura` e `balance`, e o que `+1`, `0`, `-1` e `|b|=2` significam.",
+            "Dado `z`, `y` e `x`, dizer se é caso 1, 2, 3 ou 4.",
+            "Desenhar a rotação do 30: o 35 muda de pai.",
+            "Depois do reset, dizer onde o 32 entra.",
+            "Hash vs BST vs AVL: busca, ordem e formato.",
         ],
     )
 

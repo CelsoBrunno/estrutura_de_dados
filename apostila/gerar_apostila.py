@@ -88,7 +88,21 @@ SUMARIO = [
     ),
     (
         "Aula 5 — Árvores Binárias e Árvores de Busca (BST)",
-        ["Vocabulário", "Live coding: inserção e travessias"],
+        [
+            "Vocabulário",
+            "O nó não é uma lista",
+            "Live coding: inserção e travessias",
+            "O que acontece se entrar o 35",
+            "Quando a árvore pende",
+            "Fórmulas do balanceamento (AVL)",
+            "Passo a passo depois de inserir",
+            "Caso 1 — rotação à direita (LL)",
+            "Caso 2 — rotação à esquerda (RR)",
+            "Caso 3 — direita no pai, depois esquerda no avô (RL)",
+            "Caso 4 — esquerda no pai, depois direita no avô (LR)",
+            "Rotação quando o pai já tem filhos",
+            "Reconstruir pelo meio e inserir o 32",
+        ],
     ),
     (
         "Aula 6 — Grafos e Algoritmos de Travessia",

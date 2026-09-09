@@ -31,6 +31,9 @@ python exemplos/03_pilha_fila.py
 python exemplos/03_callcenter.py
 python exemplos/04_hash.py
 python exemplos/05_bst.py
+python exemplos/05_bst_pendente.py
+python exemplos/05_bst_rebalance.py
+python exemplos/05_bst_avl.py
 python exemplos/06_grafo.py
 python exemplos/07_heap.py
 python exemplos/07_triagem.py
