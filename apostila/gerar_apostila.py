@@ -110,7 +110,11 @@ SUMARIO = [
     ),
     (
         "Aula 7 — Heaps e preparação para o projeto",
-        ["Índices no array", "Briefing do Projeto Final"],
+        [
+            "Índices no array",
+            "Extrair a raiz, um de cada vez",
+            "Briefing do Projeto Final",
+        ],
     ),
     (
         "Aula 8 — Projeto Final (PBL Integrado)",

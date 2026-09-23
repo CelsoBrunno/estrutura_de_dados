@@ -482,6 +482,41 @@ def _aula7(doc):
         "estrutura que você souber defender — a do zero prova que entendeu o índice.",
     )
 
+    e.h_secao(doc, "Extrair a raiz, um de cada vez")
+    e.corpo(
+        doc,
+        "Ler o array da esquerda para a direita não é a ordem de saída. "
+        "A lista [8, 6, 7, 1, 3, 4, 2] já é uma max-heap: pai ≥ filhos, e o maior "
+        "está no índice 0. No código desta aula a comparação é a inversa (min-heap). "
+        "A casa que muda é a mesma.",
+    )
+    e.corpo(
+        doc,
+        "Ao tirar a raiz, o último índice ocupa o índice 0 e a lista encolhe no fim. "
+        "Esse valor troca com o filho maior (`2*i+1` ou `2*i+2`) enquanto o filho for maior. "
+        "Os outros índices ficam parados. Não é um escorregão para a casa vizinha.",
+    )
+    e.figura(
+        doc,
+        "07_heap_passo_1.png",
+        "1. A raiz é 8. O 4 está debaixo do 7, no índice 5.",
+    )
+    e.figura(
+        doc,
+        "07_heap_passo_2.png",
+        "2. Saiu o 8. O 2 foi para o índice 0, trocou com o 7 e depois com o 4. Nova raiz: 7.",
+    )
+    e.figura(
+        doc,
+        "07_heap_passo_3.png",
+        "3. Saiu o 7. O 2 trocou com o 6 e depois com o 3. O 4 continua à direita. Nova raiz: 6.",
+    )
+    e.figura(
+        doc,
+        "07_heap_passo_4.png",
+        "4. Saiu o 6. O 4 sobe do índice 2 para o 0 e vira a raiz. A ordem de saída foi 8, 7, 6, 4.",
+    )
+
     e.h_secao(doc, "Práticas da aula")
     e.pratica(
         doc,
