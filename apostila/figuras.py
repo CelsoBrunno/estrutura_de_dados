@@ -643,6 +643,8 @@ def gerar_todas() -> None:
     from figuras_avl import gerar_avl
     gerar_avl()
     grafo()
+    from figuras_grafo import gerar as gerar_grafo
+    gerar_grafo()
     heap()
     logistica()
     print("Figuras em", PASTA)

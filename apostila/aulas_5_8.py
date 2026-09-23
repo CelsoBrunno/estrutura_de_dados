@@ -1,4 +1,5 @@
 import aula5_balance
+import aula6
 import estilo as e
 
 BST = '''class NoArvore:
@@ -56,52 +57,6 @@ print("Em ordem:")
 arvore.em_ordem(arvore.raiz)
 print("\\nPré-ordem:")
 arvore.pre_ordem(arvore.raiz)
-'''
-
-GRAFO = '''from collections import deque
-
-
-class Grafo:
-    def __init__(self):
-        self.vizinhos = {}
-
-    def adicionar_vertice(self, nome):
-        self.vizinhos.setdefault(nome, [])
-
-    def adicionar_aresta(self, a, b):
-        self.adicionar_vertice(a)
-        self.adicionar_vertice(b)
-        self.vizinhos[a].append(b)
-        self.vizinhos[b].append(a)
-
-    def bfs(self, inicio, destino):
-        fila = deque([inicio])
-        veio_de = {inicio: None}
-        while fila:
-            atual = fila.popleft()
-            if atual == destino:
-                break
-            for vizinho in self.vizinhos[atual]:
-                if vizinho not in veio_de:
-                    veio_de[vizinho] = atual
-                    fila.append(vizinho)
-        if destino not in veio_de:
-            return None
-        caminho = []
-        atual = destino
-        while atual is not None:
-            caminho.append(atual)
-            atual = veio_de[atual]
-        caminho.reverse()
-        return caminho
-
-
-rede = Grafo()
-rede.adicionar_aresta("Alice", "Bruno")
-rede.adicionar_aresta("Bruno", "Carlos")
-rede.adicionar_aresta("Alice", "Duda")
-print("Amigos de Bruno:", rede.vizinhos["Bruno"])
-print("Caminho Alice → Carlos:", rede.bfs("Alice", "Carlos"))
 '''
 
 HEAP = '''class MinHeap:
@@ -384,65 +339,7 @@ def _aula5(doc):
 
 
 def _aula6(doc):
-    e.h_aula(doc, 6, "Grafos e Algoritmos de Travessia")
-    e.objetivo(
-        doc,
-        "Modelar vértices e arestas, escolher lista de adjacência e achar o caminho mais "
-        "curto em arestas com BFS — usando fila.",
-    )
-    e.aviso_ferramenta(doc, "VS Code")
-    e.corpo(
-        doc,
-        "Árvore é um grafo sem ciclo, com um ancestral comum. Grafo permite ciclo: "
-        "Alice é amiga de Bruno, Bruno de Carlos, Carlos de Alice.",
-    )
-    e.figura(
-        doc,
-        "06_grafo.png",
-        "Rede da prática: amizades são arestas. O caminho mais curto Alice–Carlos tem duas arestas.",
-    )
-
-    e.h_secao(doc, "Matriz versus lista de adjacência")
-    e.bullets(
-        doc,
-        [
-            "Matriz — tabela V×V. Olhar se existe aresta é `O(1)`, mas gasta `O(V²)` de memória.",
-            "Lista — para cada vértice, a lista de vizinhos. Melhor quando o grafo é esparso "
-            "(poucas arestas). É o que usamos no curso.",
-        ],
-    )
-
-    e.h_secao(doc, "BFS com fila")
-    e.corpo(
-        doc,
-        "Busca em largura visita camada por camada. A estrutura certa é a fila da Aula 3 "
-        "(quem entra primeiro na visita sai primeiro). O caminho mais curto em número de "
-        "arestas cai de graça se você guardar `veio_de`.",
-    )
-    e.codigo(doc, GRAFO, "exemplos/06_grafo.py")
-    e.dica(
-        doc,
-        "Aqui o exemplo usa [[deque]] + [[popleft()]] para a BFS ficar `O(1)` na ponta da fila. "
-        "É a mesma regra FIFO que vocês implementaram com nós. No projeto, pode colar a "
-        "classe `Fila` da Aula 3 no lugar do deque. Vértices novos usam [[setdefault()]].",
-    )
-
-    e.h_secao(doc, "Práticas da aula")
-    e.pratica(
-        doc,
-        "Prática — Rede social restrita",
-        "Cadastre 5 pessoas e algumas amizades. Mostre amigos em comum (interseção das "
-        "listas) e o caminho mais curto entre dois usuários com BFS.",
-    )
-
-    e.checkpoint(
-        doc,
-        [
-            "Desenhar o grafo da prática no papel (círculos e linhas).",
-            "Rodar BFS e conferir o caminho com o desenho.",
-            "Dizer por que DFS (pilha) não garante o menor número de arestas.",
-        ],
-    )
+    aula6.escrever_aula6(doc, quebrar=True)
 
 
 def _aula7(doc):

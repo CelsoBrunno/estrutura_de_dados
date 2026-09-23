@@ -67,7 +67,7 @@ Nesta aula você **não usa o `dict`** para guardar o catálogo: recria a ideia 
 ## 5. Peças da tabela hash
 
 1. **Tabela** — um array de tamanho fixo (ex.: 5 ou 8 posições).
-2. **Balde** — cada posição é uma listinha (vazia no início).
+2. **Balde** — cada posição é uma listinha (vazia no início). Nome padrão em inglês: **bucket**. Não é só “posição”: cada índice é um recipiente (vazio, um par ou vários). Na analogia, “andar” ajuda a imaginar; na estrutura, o nome técnico é balde. Outros textos usam *slot* (endereçamento aberto) ou *bin*.
 3. **Função de hash** — transforma a chave em inteiro.
 4. **Índice** — `hash(chave) % tamanho` (garante índice entre `0` e `tamanho - 1`).
 5. **Par** — dentro do balde guardamos `[chave, valor]`.

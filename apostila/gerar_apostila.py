@@ -106,7 +106,16 @@ SUMARIO = [
     ),
     (
         "Aula 6 — Grafos e Algoritmos de Travessia",
-        ["Matriz versus lista de adjacência", "BFS com fila"],
+        [
+            "O que é (e o que não é)",
+            "Peças: vértice e aresta",
+            "Não direcionado e direcionado",
+            "Vértices adjacentes e grau",
+            "Caminhos (e ciclo)",
+            "Grafos ponderados",
+            "Como guardar: lista ou matriz",
+            "BFS com fila",
+        ],
     ),
     (
         "Aula 7 — Heaps e preparação para o projeto",

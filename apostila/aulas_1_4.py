@@ -644,6 +644,13 @@ def _aula4(doc):
             "*Par* — dentro do balde guardamos `[chave, valor]`.",
         ],
     )
+    e.dica(
+        doc,
+        "*Balde* é o nome padrão (em inglês: *bucket*). Não chamamos só de “posição” "
+        "porque cada índice é um *recipiente*: pode estar vazio, ter um par ou vários "
+        "(quando há colisão). Na analogia, “andar” ajuda a imaginar; na estrutura, o "
+        "nome técnico é balde. Outros textos usam *slot* (endereçamento aberto) ou *bin*.",
+    )
     e.codigo(doc, ESQUEMA_BALDES)
     e.corpo(
         doc,

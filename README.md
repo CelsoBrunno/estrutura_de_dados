@@ -18,6 +18,14 @@ cd apostila
 python gerar_apostila.py
 ```
 
+Para gerar *só* a Aula 4 (rascunho isolado, sem mexer na apostila completa):
+
+```
+cd apostila
+python aula4.py
+python aula6.py
+```
+
 ## Como estudar (você e o aluno)
 
 Instale Python 3, abra esta pasta no VS Code.
@@ -30,6 +38,7 @@ python exemplos/02_reprodutor.py
 python exemplos/03_pilha_fila.py
 python exemplos/03_callcenter.py
 python exemplos/04_hash.py
+python exemplos/04_hash_dinamico.py
 python exemplos/05_bst.py
 python exemplos/05_bst_pendente.py
 python exemplos/05_bst_rebalance.py

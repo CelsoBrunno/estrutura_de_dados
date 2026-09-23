@@ -46,7 +46,7 @@ def escrever_apendice(doc):
             "`exemplos/03_pilha_fila.py` e `03_callcenter.py` — nós LIFO/FIFO e PBL do Call Center.",
             "`exemplos/04_hash.py` — tabela com encadeamento.",
             "`exemplos/05_bst.py`, `05_bst_pendente.py`, `05_bst_rebalance.py` e `05_bst_avl.py` — BST, vareta, reset, fórmulas e os quatro casos AVL.",
-            "`exemplos/06_grafo.py` — lista de adjacência e BFS.",
+            "`exemplos/06_grafo.py` — lista de adjacência, vocabulário e BFS.",
             "`exemplos/07_heap.py` e `07_triagem.py` — min-heap e prioridade.",
             "`exemplos/08_logistica.py` — simulador integrado (referência da Aula 8).",
         ],
