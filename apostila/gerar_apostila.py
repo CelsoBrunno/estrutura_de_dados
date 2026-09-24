@@ -120,6 +120,10 @@ SUMARIO = [
     (
         "Aula 7 — Heaps e preparação para o projeto",
         [
+            "Árvore binária completa (anotação)",
+            "Max-heap e min-heap",
+            "Isto é heap? (exemplo para anotar)",
+            "Onde o heap aparece (só para anotar)",
             "Índices no array",
             "Extrair a raiz, um de cada vez",
             "Briefing do Projeto Final",

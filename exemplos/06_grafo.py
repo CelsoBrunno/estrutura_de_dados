@@ -44,11 +44,13 @@ class Grafo:
 
 
 if __name__ == "__main__":
-    rede = Grafo()
-    rede.adicionar_aresta("Alice", "Bruno")
-    rede.adicionar_aresta("Bruno", "Carlos")
-    rede.adicionar_aresta("Alice", "Duda")
-    rede.adicionar_aresta("Duda", "Carlos")
-    print("Amigos de Bruno:", rede.vizinhos["Bruno"])
-    print("Caminho Alice -> Carlos:", rede.bfs("Alice", "Carlos"))
-    print("Amigos em comum Alice e Carlos:", rede.amigos_em_comum("Alice", "Carlos"))
+    rua = Grafo()
+    rua.adicionar_aresta("Karla", "Brunno")
+    rua.adicionar_aresta("Brunno", "Carlos")
+    rua.adicionar_aresta("Carlos", "Erik")
+    rua.adicionar_aresta("Erik", "Natan")
+    rua.adicionar_aresta("Natan", "Gabriel")
+    rua.adicionar_aresta("Juan", "Gabriel")
+    print("Vizinhos do Gabriel:", rua.vizinhos["Gabriel"])
+    print("Caminho Gabriel -> Karla:", rua.bfs("Gabriel", "Karla"))
+    print("Amigos em comum Brunno e Erik:", rua.amigos_em_comum("Brunno", "Erik"))

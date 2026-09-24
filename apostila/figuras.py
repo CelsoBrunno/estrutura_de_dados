@@ -553,20 +553,25 @@ def bst_meio_32():
 
 def grafo():
     im, d = nova(1400, 520)
-    centro_txt(d, (700, 36), "Grafo: vertices (pessoas) e arestas (amizades)", FT, NAVY)
-    pos = {
-        "Alice": (280, 180),
-        "Bruno": (700, 140),
-        "Carlos": (1120, 220),
-        "Duda": (700, 380),
-    }
-    edges = [("Alice", "Bruno"), ("Bruno", "Carlos"), ("Alice", "Duda"), ("Duda", "Carlos")]
-    for a, b in edges:
+    centro_txt(d, (700, 36), "Grafo da aula: vertices (pessoas) e arestas (amizades)", FT, NAVY)
+    nomes = ["Karla", "Brunno", "Carlos", "Erik", "Natan", "Gabriel", "Juan"]
+    xs = [100, 310, 520, 730, 940, 1150, 1320]
+    pos = {n: (xs[i], 220) for i, n in enumerate(nomes)}
+    for a, b in zip(nomes, nomes[1:]):
         d.line([pos[a], pos[b]], fill=TEAL, width=4)
     for nome, (x, y) in pos.items():
-        d.ellipse((x - 70, y - 46, x + 70, y + 46), fill=AZUL, outline=NAVY, width=3)
+        rx = 68 if nome != "Gabriel" else 78
+        fill = (255, 214, 150) if nome in ("Gabriel", "Karla") else AZUL
+        d.ellipse((x - rx, y - 40, x + rx, y + 40), fill=fill, outline=NAVY, width=3)
         centro_txt(d, (x, y), nome, FB, NAVY)
-    centro_txt(d, (700, 480), "BFS (fila): caminho mais curto em numero de arestas. Alice -> Carlos = Alice-Bruno-Carlos", F, PRETO)
+    centro_txt(
+        d,
+        (700, 400),
+        "BFS Gabriel -> Karla (fila): Gabriel-Natan-Erik-Carlos-Brunno-Karla",
+        F,
+        PRETO,
+    )
+    centro_txt(d, (700, 450), "Vizinhos do Gabriel: Natan e Juan. Juan nao entra nesse caminho.", FS, CINZA)
     salvar(im, "06_grafo.png")
 
 
@@ -596,6 +601,67 @@ def heap():
         centro_txt(d, (x + 40, 555), str(i), FS, CINZA)
     centro_txt(d, (780, 510), "array:", F, NAVY)
     salvar(im, "07_heap.png")
+
+
+def heap_completa():
+    im, d = nova(1400, 560)
+    centro_txt(d, (700, 32), "Arvore binaria completa: enche da esquerda. So o ultimo nivel pode falhar, a direita.", FT, NAVY)
+
+    def bolha(x, y, fill=AZUL):
+        d.ellipse((x - 22, y - 22, x + 22, y + 22), fill=fill, outline=NAVY, width=3)
+        return x, y
+
+    n0 = bolha(700, 100)
+    n1 = bolha(420, 210)
+    n2 = bolha(980, 210)
+    n3 = bolha(280, 320)
+    n4 = bolha(560, 320)
+    n5 = bolha(840, 320)
+    n6 = bolha(1120, 320)
+    n7 = bolha(210, 440, MINT)
+    for a, b in [(n0, n1), (n0, n2), (n1, n3), (n1, n4), (n2, n5), (n2, n6), (n3, n7)]:
+        d.line([a, b], fill=TEAL, width=3)
+    for x in (350, 490, 630, 770):
+        d.ellipse((x - 22, 418, x + 22, 462), fill=BRANCO, outline=CINZA, width=2)
+    centro_txt(d, (210, 490), "ok", FS, TEAL)
+    centro_txt(d, (520, 490), "faltam (so a direita)", FS, CINZA)
+    centro_txt(d, (700, 535), "Altura ~ log n. So cresce quando n chega na proxima potencia de 2.", F, PRETO)
+    salvar(im, "07_heap_completa.png")
+
+
+def heap_exemplo():
+    im, d = nova(1400, 620)
+    centro_txt(d, (700, 28), "Exemplo: completa + min-heap. Array e arvore sao a mesma coisa.", FT, NAVY)
+    vals = [3, 10, 5, 11, 12, 6, 8, 15, 20, 13]
+    for i, v in enumerate(vals):
+        x = 80 + i * 124
+        caixa(d, (x, 70, x + 110, 130), AZUL, NAVY, 8)
+        centro_txt(d, (x + 55, 90), str(v), FB, NAVY)
+        centro_txt(d, (x + 55, 148), str(i), FS, CINZA)
+
+    def no(x, y, v, idx, destaque=False):
+        fill = (255, 214, 150) if destaque else MINT
+        d.ellipse((x - 36, y - 36, x + 36, y + 36), fill=fill, outline=NAVY, width=3)
+        centro_txt(d, (x, y - 4), str(v), FT, NAVY)
+        centro_txt(d, (x, y + 22), f"i={idx}", FS, CINZA)
+        return x, y
+
+    n0 = no(700, 230, 3, 0)
+    n1 = no(400, 340, 10, 1)
+    n2 = no(1000, 340, 5, 2)
+    n3 = no(250, 460, 11, 3, True)
+    n4 = no(550, 460, 12, 4)
+    n5 = no(900, 460, 6, 5)
+    n6 = no(1150, 460, 8, 6)
+    n7 = no(160, 570, 15, 7)
+    n8 = no(340, 570, 20, 8)
+    n9 = no(550, 570, 13, 9)
+    for a, b in [(n0, n1), (n0, n2), (n1, n3), (n1, n4), (n2, n5), (n2, n6), (n3, n7), (n3, n8), (n4, n9)]:
+        d.line([(a[0], a[1] + 36), (b[0], b[1] - 36)], fill=TEAL, width=2)
+    caixa(d, (980, 200, 1360, 300), (247, 247, 247), LARANJA, 10)
+    centro_txt(d, (1170, 230), "j = 3  (valor 11)", FB, LARANJA)
+    centro_txt(d, (1170, 268), "pai (3-1)//2 = 1   filhos 7 e 8", FS, NAVY)
+    salvar(im, "07_heap_exemplo.png")
 
 
 def logistica():
@@ -646,6 +712,8 @@ def gerar_todas() -> None:
     from figuras_grafo import gerar as gerar_grafo
     gerar_grafo()
     heap()
+    heap_completa()
+    heap_exemplo()
     logistica()
     print("Figuras em", PASTA)
 

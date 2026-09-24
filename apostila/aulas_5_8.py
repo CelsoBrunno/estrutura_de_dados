@@ -362,6 +362,90 @@ def _aula7(doc):
         "A árvore e o array são a mesma estrutura. Filho esquerdo de i está em 2*i+1.",
     )
 
+    e.h_secao(doc, "Árvore binária completa (anotação)")
+    e.corpo(
+        doc,
+        "Heap *não* é a BST da Aula 5. A forma é uma *árvore binária completa*: cada "
+        "nível enche da *esquerda para a direita*, e um nível só começa quando o de "
+        "cima está cheio. Podem faltar nós — só no último nível, e só à *direita*.",
+    )
+    e.figura(
+        doc,
+        "07_heap_completa.png",
+        "Completa = preenchida de cima para baixo, da esquerda para a direita. É isso que autoriza o array.",
+    )
+    e.bullets(
+        doc,
+        [
+            "Altura ≈ `log n`. Só aumenta quando `n` chega na próxima potência de 2.",
+            "Sem essa regra, as fórmulas `2*i+1` / `2*i+2` não batem: o filho esquerdo "
+            "deixaria de cair no lugar fixo do vetor.",
+            "BST pendente (Aula 5) *não* é completa — por isso não mora num array com essas contas.",
+        ],
+    )
+
+    e.h_secao(doc, "Max-heap e min-heap")
+    e.corpo(
+        doc,
+        "Além de ser completa, a heap tem uma regra de *valor*. São duas variantes; "
+        "muda só a comparação. O código da aula é *min-heap*.",
+    )
+    e.bullets(
+        doc,
+        [
+            "*Min-heap* — pai ≤ filhos. O *menor* está na raiz (índice 0). "
+            "É o da triagem e do `exemplos/07_heap.py`.",
+            "*Max-heap* — pai ≥ filhos. O *maior* está na raiz. "
+            "É o exemplo `[8, 6, 7, 1, 3, 4, 2]` mais abaixo.",
+        ],
+    )
+    e.dica(
+        doc,
+        "Os dois são heap. Se o slide disser “pai ≥ filhos”, é máximo. Se o Python "
+        "usar `<` na hora de subir, é mínimo. Não misture a regra na mesma árvore.",
+    )
+
+    e.h_secao(doc, "Isto é heap? (exemplo para anotar)")
+    e.corpo(
+        doc,
+        "Array `[3, 10, 5, 11, 12, 6, 8, 15, 20, 13]`. É árvore *completa*. "
+        "Pegue o nó `j = 3` (valor 11): pai `(3-1)//2 = 1` (o 10); filhos `2*3+1 = 7` "
+        "e `2*3+2 = 8` (15 e 20). Em todo pai, o valor é ≤ os filhos — então *é* "
+        "min-heap. *Não* é max-heap: a raiz é 3, o menor, não o maior.",
+    )
+    e.figura(
+        doc,
+        "07_heap_exemplo.png",
+        "Mesmos dez números no vetor e na árvore. Destaque: índice 3 → pai 1, filhos 7 e 8.",
+    )
+
+    e.h_secao(doc, "Onde o heap aparece (só para anotar)")
+    e.corpo(
+        doc,
+        "Heap é a estrutura por trás da *fila de prioridade*: o próximo a sair não é "
+        "quem chegou primeiro, é o de maior (ou menor) prioridade. Exemplos — o curso "
+        "só cobra os dois primeiros:",
+    )
+    e.bullets(
+        doc,
+        [
+            "*Neste curso* — triagem (menor gravidade sai primeiro) e pacote urgente na logística.",
+            "*Compactação (Huffman)* — o algoritmo vai pegando os dois símbolos *menos* "
+            "frequentes; isso é min-heap. A árvore de códigos que nasce no fim *não* é heap.",
+            "*Grafos* — Dijkstra e Prim usam heap para escolher o próximo vértice mais barato "
+            "(a BFS da Aula 6 usa *fila*, porque toda aresta vale 1).",
+            "*Busca A** — IA / jogos: o próximo a expandir é o de menor estimativa de custo.",
+            "*Estatística* — manter os *k* maiores (ou menores) de um fluxo, sem ordenar tudo.",
+            "*Sistema operacional* — quem o processador atende agora (prioridade, interrupção).",
+        ],
+    )
+    e.dica(
+        doc,
+        "Na apresentação da Aula 8: “usei heap porque a urgência não é FIFO”. Não precisa "
+        "citar Dijkstra. Se citarem Huffman, digam: heap escolhe o próximo; compactar o "
+        "arquivo é outro passo.",
+    )
+
     e.h_secao(doc, "Índices no array")
     e.bullets(
         doc,
@@ -447,6 +531,8 @@ def _aula7(doc):
     e.checkpoint(
         doc,
         [
+            "Dizer o que é árvore binária completa e por que isso autoriza o array.",
+            "Dizer se `[3, 10, 5, 11, 12, 6, 8, 15, 20, 13]` é heap — e se é min ou max.",
             "Inserir quatro números no min-heap e extrair em ordem crescente.",
             "Atender o paciente crítico antes do leve.",
             "Escrever no caderno qual estrutura vai para cada peça do simulador.",

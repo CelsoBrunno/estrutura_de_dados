@@ -117,12 +117,15 @@ class Grafo:
         return caminho
 
 
-rede = Grafo()
-rede.adicionar_aresta("Alice", "Bruno")
-rede.adicionar_aresta("Bruno", "Carlos")
-rede.adicionar_aresta("Alice", "Duda")
-print("Amigos de Bruno:", rede.vizinhos["Bruno"])
-print("Caminho Alice → Carlos:", rede.bfs("Alice", "Carlos"))
+rua = Grafo()
+rua.adicionar_aresta("Karla", "Brunno")
+rua.adicionar_aresta("Brunno", "Carlos")
+rua.adicionar_aresta("Carlos", "Erik")
+rua.adicionar_aresta("Erik", "Natan")
+rua.adicionar_aresta("Natan", "Gabriel")
+rua.adicionar_aresta("Juan", "Gabriel")
+print("Vizinhos do Gabriel:", rua.vizinhos["Gabriel"])
+print("Caminho Gabriel → Karla:", rua.bfs("Gabriel", "Karla"))
 '''
 
 
@@ -162,7 +165,7 @@ def escrever_aula6(doc, quebrar=True):
     e.figura(
         doc,
         "06_grafo.png",
-        "Rede da prática: pessoas são vértices, amizades são arestas.",
+        "Exemplo da aula: Karla–Brunno–Carlos–Erik–Natan–Gabriel–Juan. Vértices = pessoas, arestas = amizades.",
     )
 
     e.h_secao(doc, "Peças: vértice e aresta")
@@ -328,8 +331,8 @@ def escrever_aula6(doc, quebrar=True):
     e.pratica(
         doc,
         "Prática B — Rede social restrita",
-        "Cadastre 5 pessoas e algumas amizades no `06_grafo.py`. Mostre amigos em comum "
-        "(interseção das listas) e o caminho mais curto entre dois usuários com BFS. "
+        "Use o grafo da aula (`Karla` … `Juan`) no `06_grafo.py`. Mostre os vizinhos de "
+        "Gabriel, amigos em comum (interseção das listas) e o caminho Gabriel → Karla com BFS. "
         "Confira com o desenho.",
     )
     e.pratica(
