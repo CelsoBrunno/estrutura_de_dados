@@ -6,6 +6,7 @@ venv/
 .env
 .env.*
 ~$*.docx
+*.huff
 Apostila-Estruturas-de-Dados-nova.docx
 .DS_Store
 Thumbs.db

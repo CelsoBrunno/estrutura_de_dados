@@ -693,7 +693,14 @@ def rodape(doc: Document) -> None:
     _add_page_field(par)
 
 
-def capa(doc: Document) -> None:
+def capa(
+    doc: Document,
+    *,
+    titulo: str | None = None,
+    subtitulo: str | None = None,
+    linha_tech: str | None = None,
+    como_funciona: str | None = None,
+) -> None:
     tabela = doc.add_table(rows=1, cols=1)
     tabela.alignment = WD_TABLE_ALIGNMENT.CENTER
     cell = tabela.cell(0, 0)
@@ -713,13 +720,13 @@ def capa(doc: Document) -> None:
 
     p2 = cell.add_paragraph()
     _tight(p2, after=8, before=4)
-    run_txt(p2, CURSO, HEAD, 32, True, BRANCO)
+    run_txt(p2, titulo or CURSO, HEAD, 32, True, BRANCO)
 
     p3 = cell.add_paragraph()
     _tight(p3, after=10, before=0)
     run_txt(
         p3,
-        "Apostila passo a passo: da memória RAM ao projeto final",
+        subtitulo or "Apostila passo a passo: da memória RAM ao projeto final",
         BODY,
         13,
         False,
@@ -729,7 +736,14 @@ def capa(doc: Document) -> None:
 
     p4 = cell.add_paragraph()
     _tight(p4, after=4, before=8)
-    run_txt(p4, "Python 3   ·   VS Code   ·   estruturas do zero", HEAD, 10, False, LARANJA)
+    run_txt(
+        p4,
+        linha_tech or "Python 3   ·   VS Code   ·   estruturas do zero",
+        HEAD,
+        10,
+        False,
+        LARANJA,
+    )
 
     p5 = cell.add_paragraph()
     _tight(p5, after=2, before=16)
@@ -743,9 +757,12 @@ def capa(doc: Document) -> None:
     caixa(
         doc,
         "Como esta apostila funciona",
-        "Você não pula para o simulador pronto. Em cada aula faz uma estrutura "
-        "simples, lê o que aquilo significa e só então volta e edita. O projeto "
-        "final nasce assim: array, lista, pilha, fila, hash, árvore, grafo e heap.",
+        como_funciona
+        or (
+            "Você não pula para o simulador pronto. Em cada aula faz uma estrutura "
+            "simples, lê o que aquilo significa e só então volta e edita. O projeto "
+            "final nasce assim: array, lista, pilha, fila, hash, árvore, grafo e heap."
+        ),
         FILL_DICA,
     )
     caixa(
