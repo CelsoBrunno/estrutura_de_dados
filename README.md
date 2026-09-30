@@ -47,9 +47,25 @@ python exemplos/06_grafo.py
 python exemplos/07_heap.py
 python exemplos/07_triagem.py
 python exemplos/08_logistica.py
+python exemplos/huffman.py
 ```
 
 O alvo do projeto final é um simulador de logística (grafo + hash + heap). A Aula 8 cobra a defesa da escolha, não só a sintaxe.
+
+## Aula extra — Huffman (compactação)
+
+Apostila de um encontro, independente das 8 aulas. Regenerar:
+
+```
+cd apostila
+python gerar_apostila_huffman.py
+```
+
+O Word/PDF saem em `apostila/Apostila-Huffman-Compactacao.docx` (e `.pdf`, se o Word estiver instalado). O live coding é:
+
+```
+python exemplos/huffman.py
+```
 
 ## Calendário
 
