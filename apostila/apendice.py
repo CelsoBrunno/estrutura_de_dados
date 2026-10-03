@@ -49,6 +49,7 @@ def escrever_apendice(doc):
             "`exemplos/06_grafo.py` — lista de adjacência, vocabulário e BFS.",
             "`exemplos/07_heap.py` e `07_triagem.py` — min-heap e prioridade.",
             "`exemplos/08_logistica.py` — simulador integrado (referência da Aula 8).",
+            "`exemplos/huffman.py` — compactar `BANANA` (hash + árvore + dois menores).",
         ],
     )
     e.dica(

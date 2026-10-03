@@ -15,6 +15,7 @@ import aulas_5_8  # noqa: E402
 import estilo as e  # noqa: E402
 import figuras  # noqa: E402
 import glossario  # noqa: E402
+import huffman_curso  # noqa: E402
 import preambulo  # noqa: E402
 
 SAIDA = HERE / "Apostila-Estruturas-de-Dados.docx"
@@ -139,6 +140,16 @@ SUMARIO = [
         ],
     ),
     (
+        "Exemplo prático — Huffman junta o curso",
+        [
+            "O que cada aula faz aqui",
+            "O problema (8 bits para tudo)",
+            "Na mão: contar, juntar, ler",
+            "Compactar e descompactar",
+            "Prática",
+        ],
+    ),
+    (
         "Apêndice — Código de referência",
         ["Gabarito — Aula 4 (hash)"],
     ),
@@ -197,12 +208,16 @@ try {{
 
 def main() -> None:
     figuras.gerar_todas()
+    from figuras_huffman import gerar_todas as gerar_figuras_huffman
+
+    gerar_figuras_huffman()
     doc = e.novo_documento()
     preambulo.escrever_capa(doc)
     e.sumario(doc, SUMARIO)
     preambulo.escrever_preambulo(doc)
     aulas_1_4.escrever_aulas_1_4(doc)
     aulas_5_8.escrever_aulas_5_8(doc)
+    huffman_curso.escrever_huffman_curso(doc)
     apendice.escrever_apendice(doc)
     glossario.escrever_glossario(doc)
     gerado = e.salvar(doc, SAIDA)

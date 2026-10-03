@@ -431,7 +431,8 @@ def _aula7(doc):
         [
             "*Neste curso* — triagem (menor gravidade sai primeiro) e pacote urgente na logística.",
             "*Compactação (Huffman)* — o algoritmo vai pegando os dois símbolos *menos* "
-            "frequentes; isso é min-heap. A árvore de códigos que nasce no fim *não* é heap.",
+            "frequentes; isso é min-heap. A árvore de códigos que nasce no fim *não* é heap. "
+            "O modelo completo está no capítulo *Exemplo prático — Huffman junta o curso*.",
             "*Grafos* — Dijkstra e Prim usam heap para escolher o próximo vértice mais barato "
             "(a BFS da Aula 6 usa *fila*, porque toda aresta vale 1).",
             "*Busca A** — IA / jogos: o próximo a expandir é o de menor estimativa de custo.",
@@ -443,7 +444,7 @@ def _aula7(doc):
         doc,
         "Na apresentação da Aula 8: “usei heap porque a urgência não é FIFO”. Não precisa "
         "citar Dijkstra. Se citarem Huffman, digam: heap escolhe o próximo; compactar o "
-        "arquivo é outro passo.",
+        "arquivo é outro passo — o capítulo prático no fim do livro mostra as três peças juntas.",
     )
 
     e.h_secao(doc, "Índices no array")
@@ -622,3 +623,8 @@ def _aula8(doc):
         ],
     )
     e.corpo(doc, "O que não precisa: banco de dados, site Django, API, login, mapa real de GPS.")
+    e.dica(
+        doc,
+        "Quer outro exemplo de união, sem ser logística? O capítulo seguinte compacta "
+        "`BANANA` com hash, árvore e a ideia do heap — Huffman. Não entra na nota da Aula 8.",
+    )

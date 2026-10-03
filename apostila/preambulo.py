@@ -34,6 +34,7 @@ def escrever_preambulo(doc):
             "Aulas 3 a 5 — regras de acesso (pilha/fila), busca por chave (hash) e ordem (BST).",
             "Aulas 6 e 7 — relações (grafo + BFS) e prioridade (heap).",
             "Aula 8 — simulador de logística, README e apresentação.",
+            "Depois das 8 aulas — Huffman: o mesmo kit (hash + árvore + heap) compactando texto.",
         ],
     )
     e.dica(
@@ -75,6 +76,7 @@ def escrever_preambulo(doc):
             "Aula 6 — Grafos e Algoritmos de Travessia",
             "Aula 7 — Estruturas avançadas (Heaps) e preparação para o projeto",
             "Aula 8 — Projeto Final (PBL Integrado)",
+            "Exemplo prático (no livro) — Huffman junta hash, árvore e heap",
         ],
     )
 
